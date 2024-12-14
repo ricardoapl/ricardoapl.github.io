@@ -3,8 +3,6 @@ layout: post
 title: Notes on Hack The Box - Nibbles
 ---
 
-## Summary
-
 In this post, I share some notes from my attempt at solving the [Nibbles](https://app.hackthebox.com/machines/Nibbles) machine from [Hack The Box](https://www.hackthebox.com). The following sections describe my solution to this machine in the context of the penetration testing stages presented in the [Penetration Testing Process](https://academy.hackthebox.com/module/90) module from [Hack The Box Academy](https://academy.hackthebox.com), namely:
 
 - Information gathering
@@ -12,7 +10,7 @@ In this post, I share some notes from my attempt at solving the [Nibbles](https:
 - Exploitation
 - Post-exploitation
 
-I've omitted the pre-engagement, lateral movement, proof-of-concept, and post-engagement stages because they don't seem to be relevant or applicable.
+I've omitted the pre-engagement, lateral movement, proof-of-concept, and post-engagement stages because they don't seem to be relevant nor applicable.
 
 ## Information gathering
 
@@ -23,9 +21,7 @@ In this stage, we gather as much information as possible about our target. Infor
 - Service enumeration
 - Host enumeration
 
-There's not much to do when it comes to open-source intelligence or infrastructure enumeration, so I will omit those categories.
-
-We are given the IP address of the target host, and we are told that it's running a Linux distribution as its operating system. In the following sections, I will describe how I've identified:
+There's not much to do when it comes to open-source intelligence or infrastructure enumeration, so I will omit those categories. In the following subsections, I will describe service and host enumeration, and how I've identified:
 
 - Open ports and services
 - Service versions
@@ -33,10 +29,15 @@ We are given the IP address of the target host, and we are told that it's runnin
 
 ### TCP SYN scan
 
-<!-- TODO (ricardoapl): Explain with https://nmap.org/book/synscan.html (root) -->
-<!-- TODO (ricardoapl): Explain with https://nmap.org/book/scan-methods-connect-scan.html (non-root) -->
+Given the IP address of the target, we start service and host enumeration by performing a [TCP SYN (Stealth) Scan (-sS)](https://nmap.org/book/synscan.html). This type of scan requires elevated privileges, because Nmap will be reading and writing raw packets instead of using the [`connect()`](https://man7.org/linux/man-pages/man2/connect.2.html) system call from the operating system. In this type of scan, Nmap will send a TCP packet to the target with the SYN flag set in an attempt to begin the [TCP 3-way handshake](https://wiki.wireshark.org/TCP_3_way_handshaking). Nmap will then interpret the responses as follows:
 
-Enter the following command into the terminal:
+- If the target replies with the SYN and ACK flags set, then the port is in the open state
+- If the target replies with the RST flag set, then the port is in the closed state
+- If the target doesn't reply, then the port is in the filtered state
+
+Nmap will not complete the TCP 3-way handshake, and instead will send a RST packet to reset the connection.
+
+Enter the following command into the terminal to perform the TCP SYN scan:
 
 ```
 $ nmap -sV --open -oA nibbles_initial_scan 10.10.10.75
@@ -65,9 +66,13 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 ```
 
+We could use the `-O` option from Nmap to perform [OS Detection](https://nmap.org/book/man-os-detection.html). However, the previous Nmap scan report already hints that the target is running Ubuntu Xenial, because that's the version with [openssh 1:7.2p2-4ubuntu2.2 source package in Ubuntu](https://launchpad.net/ubuntu/+source/openssh/1:7.2p2-4ubuntu2.2).
+
 ### TCP SYN scan whole port range
 
-Enter the following command into the terminal:
+<!-- XXX (ricardoapl): CONTINUE FROM HERE -->
+
+Enter the following command into the terminal to perform the TCP SYN scan whole port range:
 
 ```
 $ nmap -p- --open -oA nibbles_full_tcp_scan 10.10.10.75
@@ -97,7 +102,7 @@ PORT   STATE SERVICE
 
 <!-- TODO (ricardoapl): Explain with https://nmap.org/book/nse-usage.html#nse-categories -->
 
-Enter the following command into the terminal:
+Enter the following command into the terminal to perform the script scan with default set:
 
 ```
 $ nmap -sC -p 22,80 -oA nibbles_script_scan 10.10.10.75
@@ -132,7 +137,7 @@ PORT   STATE SERVICE
 
 <!-- TODO (ricardoapl): Explain with https://nmap.org/nsedoc/scripts/http-enum.html -->
 
-Enter the following command into the terminal:
+Enter the following command into the terminal to perform the script scan with http-enum:
 
 ```
 $ nmap -sV --script=http-enum -oA nibbles_nmap_http_enum 10.10.10.75
@@ -162,19 +167,26 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 ```
 
-<!-- TODO (ricardoapl): Add gobuster scan -->
+<!-- TODO (ricardoapl): Add gobuster scan section -->
 
 ## Vulnerability assessment
 
-...
+<!-- XXX (ricardoapl): searchsploit into NIST -->
+<!-- TODO (ricardoapl): Add reference/quote to https://nvd.nist.gov/vuln/detail/CVE-2019-11231 -->
+<!-- XXX (ricardoapl): maybe I can also add --script vuln scan here with -p80? seems to be relevant -->
+
+In this stage, ...
 
 ## Exploitation
 
-...
+<!-- TODO (ricardoapl): Demonstrate manual exploitation -->
+<!-- TODO (ricardoapl): Demonstrate alternative exploitation with metasploit -->
+
+In this stage, ...
 
 ## Post-exploitation
 
-...
+In this stage, ...
 
 ## Conclusion
 
