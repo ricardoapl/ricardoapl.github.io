@@ -29,7 +29,7 @@ There's not much to do when it comes to open-source intelligence or infrastructu
 
 ### TCP SYN scan
 
-Given the IP address of the target, we start service and host enumeration by performing a [TCP SYN (Stealth) Scan (-sS)](https://nmap.org/book/synscan.html). This type of scan requires elevated privileges, because Nmap will be reading and writing raw packets instead of using the [`connect()`](https://man7.org/linux/man-pages/man2/connect.2.html) system call from the operating system. In this type of scan, Nmap will send a TCP packet to the target with the SYN flag set in an attempt to begin the [TCP 3-way handshake](https://wiki.wireshark.org/TCP_3_way_handshaking). Nmap will then interpret the responses as follows:
+Given the IP address of the target, we start service and host enumeration by performing a [TCP SYN (Stealth) Scan (-sS)](https://nmap.org/book/synscan.html). This type of scan requires elevated privileges, because Nmap will read and write raw packets instead of using the [`connect()`](https://man7.org/linux/man-pages/man2/connect.2.html) system call from the operating system. In this type of scan, Nmap will send a TCP packet to the target with the SYN flag set in an attempt to begin the [TCP 3-way handshake](https://wiki.wireshark.org/TCP_3_way_handshaking). Nmap will then interpret the responses as follows:
 
 - If the target replies with the SYN and ACK flags set, then the port is in the open state
 - If the target replies with the RST flag set, then the port is in the closed state
@@ -66,11 +66,11 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 ```
 
-We could use the `-O` option from Nmap to perform [OS Detection](https://nmap.org/book/man-os-detection.html). However, the previous Nmap scan report already hints that the target is running Ubuntu Xenial, because that's the version with [openssh 1:7.2p2-4ubuntu2.2 source package in Ubuntu](https://launchpad.net/ubuntu/+source/openssh/1:7.2p2-4ubuntu2.2).
+We can use the `-O` option from Nmap to perform [OS Detection](https://nmap.org/book/man-os-detection.html). However, the previous command output already hints that the target is running Ubuntu Xenial, because that's the version with [openssh 1:7.2p2-4ubuntu2.2 source package in Ubuntu](https://launchpad.net/ubuntu/+source/openssh/1:7.2p2-4ubuntu2.2).
 
 ### TCP SYN scan whole port range
 
-<!-- XXX (ricardoapl): CONTINUE FROM HERE -->
+By default, Nmap scans the most common 1000 ports for each protocol using a [Well Known Port List: nmap-services](https://nmap.org/book/nmap-services.html). For a more thorough assessment, Nmap can scan ports from 1 through 65535 using the `-p-` option. It can take a while for Nmap to scan the whole port range, so we can leave this scan running in the background while we explore the web service and application that is running on TCP port 80.
 
 Enter the following command into the terminal to perform the TCP SYN scan whole port range:
 
@@ -98,9 +98,11 @@ PORT   STATE SERVICE
 80/tcp open  http
 ```
 
+The aforementioned command output displays nothing new compared to the output of the previous TCP SYN scan.
+
 ### Script scan with default set
 
-<!-- TODO (ricardoapl): Explain with https://nmap.org/book/nse-usage.html#nse-categories -->
+Knowing what ports the target is listening on, we can leverage the [Nmap Scripting Engine](https://nmap.org/book/nse.html) to perform a script scan using the default [Script Categories](https://nmap.org/book/nse-usage.html#nse-categories). The Nmap Scripting Engine is designed to automate various tasks, and it allows Nmap to gather even more information about the target such as service vulnerabilities.
 
 Enter the following command into the terminal to perform the script scan with default set:
 
@@ -132,6 +134,8 @@ PORT   STATE SERVICE
 80/tcp open  http
 |_http-title: Site doesn't have a title (text/html).
 ```
+
+<!-- TODO (ricardoapl): Add a comment/paragraph about scan output -->
 
 ### Script scan with http-enum
 
@@ -167,13 +171,16 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 ```
 
+### Directory and file brute-force
+
 <!-- TODO (ricardoapl): Add gobuster scan section -->
+
+...
 
 ## Vulnerability assessment
 
-<!-- XXX (ricardoapl): searchsploit into NIST -->
+<!-- XXX (ricardoapl): Mention searchsploit into NIST -->
 <!-- TODO (ricardoapl): Add reference/quote to https://nvd.nist.gov/vuln/detail/CVE-2019-11231 -->
-<!-- XXX (ricardoapl): maybe I can also add --script vuln scan here with -p80? seems to be relevant -->
 
 In this stage, ...
 
