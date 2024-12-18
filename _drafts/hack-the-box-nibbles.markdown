@@ -102,7 +102,7 @@ The aforementioned command output displays nothing new compared to the output of
 
 ### Script scan with default set
 
-Knowing what ports the target is listening on, we can leverage the [Nmap Scripting Engine](https://nmap.org/book/nse.html) to perform a script scan using the default [Script Categories](https://nmap.org/book/nse-usage.html#nse-categories). The Nmap Scripting Engine is designed to automate various tasks, and it allows Nmap to gather even more information about the target such as service vulnerabilities.
+Knowing what ports the target is listening on, we can leverage the [Nmap Scripting Engine](https://nmap.org/book/nse.html) to perform a script scan using the [default NSE category](https://nmap.org/nsedoc/categories/default.html). The Nmap Scripting Engine is designed to automate various tasks, and the default set allows Nmap to gather even more information about the target such as [Cross-Origin Resource Sharing (CORS)](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS).
 
 Enter the following command into the terminal to perform the script scan with default set:
 
@@ -135,11 +135,11 @@ PORT   STATE SERVICE
 |_http-title: Site doesn't have a title (text/html).
 ```
 
-<!-- TODO (ricardoapl): Add a comment/paragraph about scan output -->
+The previous command output shows the target SSH server's key fingerprint, but not much else.
 
 ### Script scan with http-enum
 
-<!-- TODO (ricardoapl): Explain with https://nmap.org/nsedoc/scripts/http-enum.html -->
+If you recall from the TCP SYN scan report, the target host is running the Apache HTTP Server. Let's try to enumerate directories using the [http-enum NSE script](https://nmap.org/nsedoc/scripts/http-enum.html). The http-enum NSE script is not part of the default NSE category, so we have to use the Nmap `--script=http-enum` option.
 
 Enter the following command into the terminal to perform the script scan with http-enum:
 
@@ -171,9 +171,9 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 ```
 
-### Directory and file brute-force
+<!-- TODO (ricardoapl): Take note of (lack of) results and bridge into gobuster section -->
 
-<!-- TODO (ricardoapl): Add gobuster scan section -->
+### Directory and file brute-force
 
 ...
 
