@@ -171,7 +171,7 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 ```
 
-<!-- TODO (ricardoapl): Take note of (lack of) results and bridge into gobuster section -->
+Once again, the command output adds nothing new, so let's search for interesting directories using gobuster instead.
 
 ### Directory and file brute-force
 
