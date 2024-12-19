@@ -175,13 +175,135 @@ Once again, the command output adds nothing new, so let's search for interesting
 
 ### Directory and file brute-force
 
-<!-- XXX (ricaroapl): CONTINUE HERE -->
+[Gobuster](https://github.com/OJ/gobuster) is a tool used to brute-force and find pages, directories, subdomains, and many other assets. Our goal is to enumerate pages and directories, so we use the directory/file enumeration mode `dir`.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam et tellus nibh. Vestibulum scelerisque elementum massa, ut aliquet massa. Praesent enim risus, posuere id porttitor sit amet, imperdiet a quam. Donec euismod eu nibh et ornare. Sed convallis ipsum eget bibendum mollis. In non commodo turpis. Suspendisse risus metus, fermentum et malesuada quis, convallis maximus mi.
+Enter the following command into the terminal to perform directory/file enumeration:
+
+```
+$ gobuster dir -u 10.10.10.75 -w danielmiessler/SecLists/Discovery/Web-Content/common.txt
+```
+
+The preceding command consists of the following elements:
+
+- `gobuster` is the command name.
+- `dir` enables directory/file enumeration mode.
+- `-u` is the flag ... the target URL.
+- `10.10.10.75` specifies the target URL.
+- `-w` is the flag ... path to the wordlist.
+- `danielmiessler/SecLists/Discovery/Web-Content/common.txt` specifies the path to the wordlist.
+
+<!-- FIXME (ricardoapl): Finish explaining command elements and tell reader where I got the wordlist from (hyperlink). -->
+
+The output is similar to the following:
+
+```
+===============================================================
+Gobuster v3.6
+by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
+===============================================================
+[+] Url:                     http://10.10.10.75
+[+] Method:                  GET
+[+] Threads:                 10
+[+] Wordlist:                danielmiessler/SecLists/Discovery/Web-Content/common.txt
+[+] Negative Status codes:   404
+[+] User Agent:              gobuster/3.6
+[+] Timeout:                 10s
+===============================================================
+Starting gobuster in directory enumeration mode
+===============================================================
+/.htaccess            (Status: 403) [Size: 295]
+/.htpasswd            (Status: 403) [Size: 295]
+/.hta                 (Status: 403) [Size: 290]
+/index.html           (Status: 200) [Size: 93]
+/server-status        (Status: 403) [Size: 299]
+
+===============================================================
+Finished
+===============================================================
+```
+
+<!-- TODO (ricardoapl): Comment on results and mention index.html as a bridge to next subsection. -->
 
 ### Manual testing
 
 Duis auctor mi arcu. Nulla ac nibh finibus, ullamcorper libero sit amet, eleifend urna. Donec posuere tempus risus sit amet vehicula. Morbi quis dapibus urna, a ornare orci. Maecenas commodo molestie sollicitudin. Praesent id tellus sed quam sollicitudin semper. In aliquet pulvinar lorem, pulvinar consequat lacus semper ut. Cras vitae nulla sed augue rhoncus mattis. Donec congue eleifend leo, eu sagittis dolor porttitor ac. Sed gravida eros a elementum vehicula. Morbi enim ex, vulputate non libero in, tempor condimentum enim. Morbi malesuada convallis justo, id facilisis arcu tempor dictum. Vivamus suscipit urna purus, id consequat nunc tincidunt sit amet. Praesent hendrerit risus risus, vel vehicula est volutpat rhoncus.
+
+<!-- TODO (ricardoapl): Navigate to root (index.html) and inspect source code -->
+
+```
+<b>Hello world!</b>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- /nibbleblog/ directory. Nothing interesting here! -->
+
+```
+
+<!-- TODO (ricardoapl): Explain re-run of gobuster with path to blog -->
+
+...
+
+Enter the following command into the terminal to perform XYZ:
+
+```
+$ gobuster dir -u 10.10.10.75/nibbleblog -w ../tools/danielmiessler/SecLists/Discovery/Web-Content/common.txt
+```
+
+The preceding command consists of the following elements:
+
+- `gobuster` is the command name.
+- `dir` enables directory/file enumeration mode.
+- `-u` is the flag ... the target URL.
+- `10.10.10.75/nibbleblog` specifies the target URL.
+- `-w` is the flag ... path to the wordlist.
+- `danielmiessler/SecLists/Discovery/Web-Content/common.txt` specifies the path to the wordlist.
+
+The output is similar to the following:
+
+```
+===============================================================
+Gobuster v3.6
+by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
+===============================================================
+[+] Url:                     http://10.10.10.75/nibbleblog
+[+] Method:                  GET
+[+] Threads:                 10
+[+] Wordlist:                danielmiessler/SecLists/Discovery/Web-Content/common.txt
+[+] Negative Status codes:   404
+[+] User Agent:              gobuster/3.6
+[+] Timeout:                 10s
+===============================================================
+Starting gobuster in directory enumeration mode
+===============================================================
+/.htaccess            (Status: 403) [Size: 306]
+/.hta                 (Status: 403) [Size: 301]
+/.htpasswd            (Status: 403) [Size: 306]
+/README               (Status: 200) [Size: 4628]
+/admin                (Status: 301) [Size: 321] [--> http://10.10.10.75/nibbleblog/admin/]
+/admin.php            (Status: 200) [Size: 1401]
+/content              (Status: 301) [Size: 323] [--> http://10.10.10.75/nibbleblog/content/]
+/index.php            (Status: 200) [Size: 2987]
+/languages            (Status: 301) [Size: 325] [--> http://10.10.10.75/nibbleblog/languages/]
+/plugins              (Status: 301) [Size: 323] [--> http://10.10.10.75/nibbleblog/plugins/]
+/themes               (Status: 301) [Size: 322] [--> http://10.10.10.75/nibbleblog/themes/]
+Progress: 4735 / 4736 (99.98%)
+===============================================================
+Finished
+===============================================================
+```
+
+<!-- XXX (ricardoapl): Come back to gobuster once we have access to a (session) cookie (-c), so we can search for protected pages and directories. -->
 
 ## Vulnerability assessment
 
