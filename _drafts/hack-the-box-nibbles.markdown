@@ -139,7 +139,7 @@ The previous command output shows the target SSH server's key fingerprint, but n
 
 ### Script scan with http-enum
 
-If you recall from the TCP SYN scan report, the target host is running the Apache HTTP Server. Let's try to enumerate directories using the [http-enum NSE script](https://nmap.org/nsedoc/scripts/http-enum.html). The http-enum NSE script is not part of the default NSE category, so we have to use the Nmap `--script=http-enum` option.
+If you recall from the TCP SYN scan report, the target host is running the Apache HTTP Server. Let's try to enumerate pages and directories exposing interesting data with the [http-enum NSE script](https://nmap.org/nsedoc/scripts/http-enum.html). The http-enum NSE script is not part of the default NSE category, so we have to use the Nmap `--script=http-enum` option.
 
 Enter the following command into the terminal to perform the script scan with http-enum:
 
@@ -171,9 +171,11 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 ```
 
-Once again, the command output adds nothing new, so let's search for interesting directories using gobuster instead.
+Once again, the command output adds nothing new, so let's search for interesting web pages and directories using gobuster instead.
 
 ### Directory and file brute-force
+
+<!-- XXX (ricaroapl): CONTINUE HERE -->
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam et tellus nibh. Vestibulum scelerisque elementum massa, ut aliquet massa. Praesent enim risus, posuere id porttitor sit amet, imperdiet a quam. Donec euismod eu nibh et ornare. Sed convallis ipsum eget bibendum mollis. In non commodo turpis. Suspendisse risus metus, fermentum et malesuada quis, convallis maximus mi.
 
