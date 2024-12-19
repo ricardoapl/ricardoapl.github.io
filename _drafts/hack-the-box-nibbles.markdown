@@ -175,7 +175,11 @@ Service detection performed. Please report any incorrect results at https://nmap
 
 ### Directory and file brute-force
 
-...
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam et tellus nibh. Vestibulum scelerisque elementum massa, ut aliquet massa. Praesent enim risus, posuere id porttitor sit amet, imperdiet a quam. Donec euismod eu nibh et ornare. Sed convallis ipsum eget bibendum mollis. In non commodo turpis. Suspendisse risus metus, fermentum et malesuada quis, convallis maximus mi.
+
+### Manual testing
+
+Duis auctor mi arcu. Nulla ac nibh finibus, ullamcorper libero sit amet, eleifend urna. Donec posuere tempus risus sit amet vehicula. Morbi quis dapibus urna, a ornare orci. Maecenas commodo molestie sollicitudin. Praesent id tellus sed quam sollicitudin semper. In aliquet pulvinar lorem, pulvinar consequat lacus semper ut. Cras vitae nulla sed augue rhoncus mattis. Donec congue eleifend leo, eu sagittis dolor porttitor ac. Sed gravida eros a elementum vehicula. Morbi enim ex, vulputate non libero in, tempor condimentum enim. Morbi malesuada convallis justo, id facilisis arcu tempor dictum. Vivamus suscipit urna purus, id consequat nunc tincidunt sit amet. Praesent hendrerit risus risus, vel vehicula est volutpat rhoncus.
 
 ## Vulnerability assessment
 
@@ -186,10 +190,19 @@ In this stage, ...
 
 ## Exploitation
 
+In this stage, ...
+
+### Manual exploitation
+
 <!-- TODO (ricardoapl): Demonstrate manual exploitation -->
+
+Cras eget mauris molestie, pretium urna quis, tristique ipsum. Praesent at lectus pretium, laoreet mi id, porttitor orci. Curabitur luctus eleifend neque, nec faucibus ligula bibendum in. Vivamus sollicitudin feugiat turpis, pulvinar vestibulum tellus lacinia at. Suspendisse potenti. Donec a sollicitudin diam. Suspendisse molestie molestie risus, nec tempor quam. Proin pellentesque molestie congue. In hac habitasse platea dictumst.
+
+### Using the Metasploit Framework
+
 <!-- TODO (ricardoapl): Demonstrate alternative exploitation with metasploit -->
 
-In this stage, ...
+Mauris sollicitudin mi neque, a placerat justo hendrerit nec. Nullam sapien nisi, efficitur at ante vel, blandit consequat ex. Nulla faucibus, ante quis ullamcorper gravida, ipsum mauris tempus nibh, ut efficitur lectus elit a lacus. Cras fermentum quis lorem vitae dapibus. Curabitur varius sodales orci eget dapibus. Nullam fermentum lacus a libero varius, suscipit eleifend libero efficitur. Suspendisse non nulla sapien. Curabitur eu metus nisl. Maecenas sagittis eros felis, tincidunt vestibulum lectus finibus vitae. Praesent mattis quam dui, ut suscipit sapien viverra et. Nulla sit amet fermentum odio. Nulla commodo mi volutpat est iaculis elementum. Suspendisse potenti. Donec vitae sollicitudin eros.
 
 ## Post-exploitation
 
@@ -197,4 +210,4 @@ In this stage, ...
 
 ## Conclusion
 
-...
+Suspendisse scelerisque non nisl vel lacinia. Curabitur pellentesque, eros id consectetur commodo, sem nisl accumsan augue, a sodales diam est sed tortor. Suspendisse varius non turpis at rutrum. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec vel suscipit nulla, vel consequat ante. Praesent semper, neque ac tincidunt fringilla, erat lacus dapibus arcu, id vestibulum dolor eros molestie risus. Morbi porttitor nisl non mi sagittis pretium. Nunc ullamcorper faucibus lorem ut volutpat. Sed imperdiet nisl id lorem auctor congue. Etiam dapibus purus blandit elit vestibulum, scelerisque viverra lorem semper. Suspendisse vehicula sem eget facilisis iaculis. Vivamus imperdiet risus ac diam vulputate, ut consequat nunc gravida.
