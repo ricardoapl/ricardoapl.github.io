@@ -171,11 +171,13 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 ```
 
-Once again, the command output adds nothing new, so let's search for interesting web pages and directories using gobuster instead.
+<!-- XXX (ricardoapl): Might want to rephrase the following sentence -->
+
+Once again, the command output adds nothing new, so let's search for interesting files and directories using gobuster instead.
 
 ### Directory and file brute-force
 
-[Gobuster](https://github.com/OJ/gobuster) is a tool used to brute-force and find pages, directories, subdomains, and many other assets. In order to brute-force pages and directories, we use the directory/file enumeration mode `dir`.
+[Gobuster](https://github.com/OJ/gobuster) is a tool used to brute-force and find files, directories, subdomains, and other assets. In order to brute-force files and directories, we use the directory/file enumeration mode `dir`.
 
 Enter the following command into the terminal to perform directory/file enumeration:
 
@@ -224,9 +226,7 @@ Most of the results in the previous command output are [Client error responses](
 
 ### Manual testing
 
-Duis auctor mi arcu. Nulla ac nibh finibus, ullamcorper libero sit amet, eleifend urna. Donec posuere tempus risus sit amet vehicula. Morbi quis dapibus urna, a ornare orci. Maecenas commodo molestie sollicitudin. Praesent id tellus sed quam sollicitudin semper. In aliquet pulvinar lorem, pulvinar consequat lacus semper ut. Cras vitae nulla sed augue rhoncus mattis. Donec congue eleifend leo, eu sagittis dolor porttitor ac. Sed gravida eros a elementum vehicula. Morbi enim ex, vulputate non libero in, tempor condimentum enim. Morbi malesuada convallis justo, id facilisis arcu tempor dictum. Vivamus suscipit urna purus, id consequat nunc tincidunt sit amet. Praesent hendrerit risus risus, vel vehicula est volutpat rhoncus.
-
-<!-- TODO (ricardoapl): Navigate to root (index.html) and inspect source code -->
+At first glance, there doesn't appear to be much in the home page of the web application running on TCP port 80. However, that turns out to not be the case after inspecting its source code. An HTML comment at the bottom of the source code mentions a `/nibbleblog/` directory.
 
 ```
 <b>Hello world!</b>
@@ -247,6 +247,8 @@ Duis auctor mi arcu. Nulla ac nibh finibus, ullamcorper libero sit amet, eleifen
 <!-- /nibbleblog/ directory. Nothing interesting here! -->
 
 ```
+
+<!-- TODO (ricardoapl): Add screenshot for /nibbleblog -->
 
 <!-- TODO (ricardoapl): Explain re-run of gobuster with path to blog -->
 
@@ -301,12 +303,13 @@ Finished
 ===============================================================
 ```
 
-<!-- XXX (ricardoapl): Come back to gobuster once we have access to a (session) cookie (-c), so we can search for protected pages and directories. -->
+<!-- XXX (ricardoapl): We'll come back to gobuster once we have access to a (session) cookie (-c), so we can search for protected pages and directories -->
 
 ## Vulnerability assessment
 
-<!-- XXX (ricardoapl): Mention searchsploit into NIST -->
-<!-- TODO (ricardoapl): Add reference/quote to https://nvd.nist.gov/vuln/detail/CVE-2019-11231 -->
+<!-- XXX (ricardoapl): Talk about searchsploit and NIST -->
+
+<!-- TODO (ricardoapl): Add reference and/or quote to https://nvd.nist.gov/vuln/detail/CVE-2019-11231 -->
 
 In this stage, ...
 
