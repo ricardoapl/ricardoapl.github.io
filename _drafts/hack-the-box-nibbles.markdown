@@ -175,24 +175,22 @@ Once again, the command output adds nothing new, so let's search for interesting
 
 ### Directory and file brute-force
 
-[Gobuster](https://github.com/OJ/gobuster) is a tool used to brute-force and find pages, directories, subdomains, and many other assets. Our goal is to enumerate pages and directories, so we use the directory/file enumeration mode `dir`.
+[Gobuster](https://github.com/OJ/gobuster) is a tool used to brute-force and find pages, directories, subdomains, and many other assets. In order to brute-force pages and directories, we use the directory/file enumeration mode `dir`.
 
 Enter the following command into the terminal to perform directory/file enumeration:
 
 ```
-$ gobuster dir -u 10.10.10.75 -w danielmiessler/SecLists/Discovery/Web-Content/common.txt
+$ gobuster dir -u 10.10.10.75 -w ./common.txt
 ```
 
 The preceding command consists of the following elements:
 
 - `gobuster` is the command name.
-- `dir` enables directory/file enumeration mode.
-- `-u` is the flag ... the target URL.
-- `10.10.10.75` specifies the target URL.
-- `-w` is the flag ... path to the wordlist.
-- `danielmiessler/SecLists/Discovery/Web-Content/common.txt` specifies the path to the wordlist.
-
-<!-- FIXME (ricardoapl): Finish explaining command elements and tell reader where I got the wordlist from (hyperlink). -->
+- `dir` is the mode to perform directory/file enumeration.
+- `-u` is the flag to specify the target URL.
+- `10.10.10.75` is the target URL.
+- `-w` is the flag to specify the path to the wordlist.
+- `./common.txt` is the path to the [common.txt](https://github.com/danielmiessler/SecLists/blob/master/Discovery/Web-Content/common.txt) wordlist from SecLists/Discovery/Web-Content.
 
 The output is similar to the following:
 
@@ -204,7 +202,7 @@ by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
 [+] Url:                     http://10.10.10.75
 [+] Method:                  GET
 [+] Threads:                 10
-[+] Wordlist:                danielmiessler/SecLists/Discovery/Web-Content/common.txt
+[+] Wordlist:                ./common.txt
 [+] Negative Status codes:   404
 [+] User Agent:              gobuster/3.6
 [+] Timeout:                 10s
@@ -222,7 +220,7 @@ Finished
 ===============================================================
 ```
 
-<!-- TODO (ricardoapl): Comment on results and mention index.html as a bridge to next subsection. -->
+Most of the results in the previous command output are [Client error responses](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#client_error_responses), but `/index.html` returned a successful response so we'll investigate that next.
 
 ### Manual testing
 
@@ -257,17 +255,17 @@ Duis auctor mi arcu. Nulla ac nibh finibus, ullamcorper libero sit amet, eleifen
 Enter the following command into the terminal to perform XYZ:
 
 ```
-$ gobuster dir -u 10.10.10.75/nibbleblog -w ../tools/danielmiessler/SecLists/Discovery/Web-Content/common.txt
+$ gobuster dir -u 10.10.10.75/nibbleblog -w ./common.txt
 ```
 
 The preceding command consists of the following elements:
 
 - `gobuster` is the command name.
-- `dir` enables directory/file enumeration mode.
-- `-u` is the flag ... the target URL.
-- `10.10.10.75/nibbleblog` specifies the target URL.
-- `-w` is the flag ... path to the wordlist.
-- `danielmiessler/SecLists/Discovery/Web-Content/common.txt` specifies the path to the wordlist.
+- `dir` is the mode to perform directory/file enumeration.
+- `-u` is the flag to specify the target URL.
+- `10.10.10.75/nibbleblog` is the target URL.
+- `-w` is the flag to specify the path to the wordlist.
+- `./common.txt` is the path to the [common.txt](https://github.com/danielmiessler/SecLists/blob/master/Discovery/Web-Content/common.txt) wordlist from SecLists/Discovery/Web-Content.
 
 The output is similar to the following:
 
@@ -279,7 +277,7 @@ by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
 [+] Url:                     http://10.10.10.75/nibbleblog
 [+] Method:                  GET
 [+] Threads:                 10
-[+] Wordlist:                danielmiessler/SecLists/Discovery/Web-Content/common.txt
+[+] Wordlist:                ./common.txt
 [+] Negative Status codes:   404
 [+] User Agent:              gobuster/3.6
 [+] Timeout:                 10s
