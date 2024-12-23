@@ -66,8 +66,6 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 ```
 
-We can use the `-O` option from Nmap to perform [OS Detection](https://nmap.org/book/man-os-detection.html). However, the previous command output already hints that the target is running Ubuntu Xenial, because that's the version with [openssh 1:7.2p2-4ubuntu2.2 source package in Ubuntu](https://launchpad.net/ubuntu/+source/openssh/1:7.2p2-4ubuntu2.2).
-
 ### TCP SYN scan whole port range
 
 By default, Nmap scans the most common 1000 ports for each protocol using a [Well Known Port List: nmap-services](https://nmap.org/book/nmap-services.html). For a more thorough assessment, Nmap can scan ports from 1 through 65535 using the `-p-` option. It can take a while for Nmap to scan the whole port range, so we can leave this scan running in the background while we explore the web service and application that is running on TCP port 80.
@@ -98,11 +96,9 @@ PORT   STATE SERVICE
 80/tcp open  http
 ```
 
-The aforementioned command output displays nothing new compared to the output of the previous TCP SYN scan.
-
 ### Script scan with default set
 
-Knowing what ports the target is listening on, we can leverage the [Nmap Scripting Engine](https://nmap.org/book/nse.html) to perform a script scan using the [default NSE category](https://nmap.org/nsedoc/categories/default.html). The Nmap Scripting Engine is designed to automate various tasks, and the default set allows Nmap to gather even more information about the target such as [Cross-Origin Resource Sharing (CORS)](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS).
+Knowing what ports the target is listening on, we can leverage the [Nmap Scripting Engine](https://nmap.org/book/nse.html) (or NSE for short) to perform a script scan using the [default NSE category](https://nmap.org/nsedoc/categories/default.html). The Nmap Scripting Engine is designed to automate various tasks, and the default set allows Nmap to gather even more information about the target such as [Cross-Origin Resource Sharing (CORS)](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS).
 
 Enter the following command into the terminal to perform the script scan with default set:
 
@@ -135,11 +131,9 @@ PORT   STATE SERVICE
 |_http-title: Site doesn't have a title (text/html).
 ```
 
-The previous command output shows the target SSH server's key fingerprint, but not much else.
-
 ### Script scan with http-enum
 
-If you recall from the TCP SYN scan report, the target host is running the Apache HTTP Server. Let's try to enumerate pages and directories exposing interesting data with the [http-enum NSE script](https://nmap.org/nsedoc/scripts/http-enum.html). The http-enum NSE script is not part of the default NSE category, so we have to use the Nmap `--script=http-enum` option.
+Recall that the target host is running an HTTP server. Let's try to enumerate pages and directories exposing interesting data with the [http-enum NSE script](https://nmap.org/nsedoc/scripts/http-enum.html). The http-enum NSE script is not part of the default NSE category, so we must use the `--script=http-enum` option.
 
 Enter the following command into the terminal to perform the script scan with http-enum:
 
@@ -171,13 +165,9 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 ```
 
-<!-- XXX (ricardoapl): Might want to rephrase the following sentence -->
-
-Once again, the command output adds nothing new, so let's search for interesting files and directories using gobuster instead.
-
 ### Directory and file brute-force
 
-[Gobuster](https://github.com/OJ/gobuster) is a tool used to brute-force and find files, directories, subdomains, and other assets. In order to brute-force files and directories, we use the directory/file enumeration mode `dir`.
+Our previous script scan with http-enum was unsuccessful, so let's search for interesting files and directories using gobuster instead. [Gobuster](https://github.com/OJ/gobuster) is a tool used to brute-force and find files, directories, subdomains, and other assets. In order to brute-force files and directories, we use the directory/file enumeration mode `dir`.
 
 Enter the following command into the terminal to perform directory/file enumeration:
 
@@ -222,11 +212,9 @@ Finished
 ===============================================================
 ```
 
-Most of the results in the previous command output are [Client error responses](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#client_error_responses), but `/index.html` returned a successful response so we'll investigate that next.
-
 ### Manual testing
 
-At first glance, there doesn't appear to be much in the home page of the web application running on TCP port 80. However, that turns out to not be the case after inspecting its source code. An HTML comment at the bottom of the source code mentions a `/nibbleblog/` directory.
+At first glance, there doesn't appear to be much in the home page of the web application listening on TCP port 80. However, that turns out to not be the case after inspecting its source code. An HTML comment at the bottom of the source code mentions a `/nibbleblog/` directory.
 
 ```
 <b>Hello world!</b>
@@ -248,13 +236,17 @@ At first glance, there doesn't appear to be much in the home page of the web app
 
 ```
 
-<!-- TODO (ricardoapl): Add screenshot for /nibbleblog -->
+Visit the web application at `http://10.10.10.75/nibbleblog` and ...
+
+<!-- TODO (ricardoapl): Add alt text to screenshot for /nibbleblog -->
+
+![TBD](/assets/images/hack-the-box-nibbles-nibbleblog.png)
 
 <!-- TODO (ricardoapl): Explain re-run of gobuster with path to blog -->
 
-...
+Now that we know ...
 
-Enter the following command into the terminal to perform XYZ:
+Enter the following command into the terminal to perform directory/file enumeration:
 
 ```
 $ gobuster dir -u 10.10.10.75/nibbleblog -w ./common.txt
